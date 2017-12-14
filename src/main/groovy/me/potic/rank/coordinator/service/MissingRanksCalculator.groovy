@@ -28,7 +28,7 @@ class MissingRanksCalculator {
         String rankId = rankerService.getActualRankId()
 
         Collection<Article> articlesToRank = articlesService.findArticlesWithoutRank(rankId, articlesRequestSize)
-        log.debug("got ${articlesToRank.size()} articles to calculate ranks...")
+        log.debug("got ${articlesToRank.size()} articles to calculate rank ${rankId}...")
 
         articlesToRank.collect({ calculateRank(it, rankId) }).forEach({ article ->
             articlesService.updateArticle(article)
@@ -38,6 +38,7 @@ class MissingRanksCalculator {
     Article calculateRank(Article article, String rankId) {
         double rankValue = rankerService.rank(article, rankId)
 
+        if (article.ranks == null) article.ranks = []
         article.ranks.removeAll { rank -> rank.id == rankId }
         article.ranks += new Rank(id: rankId, value: rankValue)
 

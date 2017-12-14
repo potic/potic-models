@@ -40,13 +40,13 @@ class RankerService {
         log.debug "requesting rank ${rankId} for ${article}..."
 
         try {
-            Double response = rankerServiceRest.post(Double) {
+            BigDecimal response = rankerServiceRest.post(BigDecimal) {
                 request.uri.path = "/rank/$rankId"
                 request.contentType = 'application/json'
                 request.body = article
             }
 
-            return response
+            return response.toDouble()
         } catch (e) {
             log.error "requesting rank ${rankId} for ${article} failed: $e.message", e
             throw new RuntimeException("requesting rank ${rankId} for ${article} failed", e)

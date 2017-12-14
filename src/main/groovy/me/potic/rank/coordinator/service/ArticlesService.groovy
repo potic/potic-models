@@ -21,7 +21,7 @@ class ArticlesService {
     }
 
     Collection<Article> findArticlesWithoutRank(String rankId, int count) {
-        log.debug "finding articles without rank..."
+        log.debug "requesting ${count} articles without rank ${rankId}..."
 
         try {
             def response = articlesServiceRest.post {
@@ -29,7 +29,7 @@ class ArticlesService {
                 request.contentType = 'application/json'
                 request.body = [ query: """
                     {
-                      withoutRank(rankId: ${rankId}, count: ${count}) {
+                      withoutRank(rankId: "${rankId}", count: ${count}) {
                         id
                       }
                     }
@@ -43,8 +43,8 @@ class ArticlesService {
 
             return response.data.withoutRank.collect({ new Article(it) })
         } catch (e) {
-            log.error "finding articles without rank failed: $e.message", e
-            throw new RuntimeException("finding articles without rank failed", e)
+            log.error "requesting ${count} articles without rank ${rankId} failed: $e.message", e
+            throw new RuntimeException("requesting ${count} articles without rank ${rankId} failed", e)
         }
     }
 
