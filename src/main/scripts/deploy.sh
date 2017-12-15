@@ -21,7 +21,7 @@ warn "Pulling latest docker image..."
 docker pull potic/potic-rank-coordinator:$TAG_TO_DEPLOY
 
 warn "Starting docker image..."
-docker run -dit --name potic-rank-coordinator -e LOG_PATH=/logs -v /logs:/logs potic/potic-rank-coordinator:$TAG_TO_DEPLOY
+docker run -dit --name potic-rank-coordinator --link potic-articles --link potic-ranker -e LOG_PATH=/mnt/logs -v /mnt/logs:/mnt/logs potic/potic-rank-coordinator:$TAG_TO_DEPLOY
 
 warn "Currently running docker images"
 docker ps -a
