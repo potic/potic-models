@@ -31,6 +31,14 @@ class ArticlesService {
                     {
                       withoutRank(rankId: "${rankId}", count: ${count}) {
                         id
+                        
+                        fromPocket {
+                            word_count
+                        }
+                        
+                        card {
+                            source
+                        }
                       }
                     }
                 """ ]
