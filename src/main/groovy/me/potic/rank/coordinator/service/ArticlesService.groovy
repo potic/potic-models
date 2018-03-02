@@ -60,6 +60,9 @@ class ArticlesService {
         log.debug "updating article ${article}..."
 
         try {
+            article.fromPocket = null
+            article.card = null
+
             articlesServiceRest.put {
                 request.uri.path = '/article'
                 request.contentType = 'application/json'
