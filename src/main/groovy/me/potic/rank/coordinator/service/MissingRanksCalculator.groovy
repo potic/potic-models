@@ -30,18 +30,9 @@ class MissingRanksCalculator {
         Collection<Article> articlesToRank = articlesService.findArticlesWithoutRank(rankId, articlesRequestSize)
         log.debug("got ${articlesToRank.size()} articles to calculate rank ${rankId}...")
 
-        articlesToRank.collect({ calculateRank(it, rankId) }).forEach({ article ->
-            articlesService.updateArticle(article)
+        articlesToRank.forEach({ article ->
+            double rankValue = rankerService.rank(article, rankId)
+            articlesService.addRankToArticle(article.id, new Rank(id: rankId, value: rankValue))
         })
-    }
-
-    Article calculateRank(Article article, String rankId) {
-        double rankValue = rankerService.rank(article, rankId)
-
-        if (article.ranks == null) article.ranks = []
-        article.ranks.removeAll { rank -> rank.id == rankId }
-        article.ranks += new Rank(id: rankId, value: rankValue)
-
-        return article
     }
 }

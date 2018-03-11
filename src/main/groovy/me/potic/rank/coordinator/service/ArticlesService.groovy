@@ -3,6 +3,7 @@ package me.potic.rank.coordinator.service
 import groovy.util.logging.Slf4j
 import groovyx.net.http.HttpBuilder
 import me.potic.rank.coordinator.domain.Article
+import me.potic.rank.coordinator.domain.Rank
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -56,21 +57,18 @@ class ArticlesService {
         }
     }
 
-    void updateArticle(Article article) {
-        log.debug "updating article ${article}..."
+    void addRankToArticle(String articleId, Rank rank) {
+        log.debug "adding rank ${rank} to article #${articleId}..."
 
         try {
-            article.fromPocket = null
-            article.card = null
-
-            articlesServiceRest.put {
-                request.uri.path = '/article'
+            articlesServiceRest.post {
+                request.uri.path = "/article/${articleId}/rank"
                 request.contentType = 'application/json'
-                request.body = article
+                request.body = rank
             }
         } catch (e) {
-            log.error "updating article ${article} failed: $e.message", e
-            throw new RuntimeException("updating article ${article} failed", e)
+            log.error "adding rank ${rank} to article #${articleId} failed: $e.message", e
+            throw new RuntimeException("adding rank ${rank} to article #${articleId} failed", e)
         }
     }
 }
