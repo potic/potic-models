@@ -30,4 +30,17 @@ class ModelController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
+
+    @CrossOrigin
+    @GetMapping(path = '/active')
+    @ResponseBody ResponseEntity<List<Model>> getActiveModels() {
+        log.debug "receive GET request for /active"
+
+        try {
+            return new ResponseEntity<>(modelService.getActiveModels(), HttpStatus.OK)
+        } catch (e) {
+            log.error "GET request for /active failed: $e.message", e
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
 }
