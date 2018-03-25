@@ -1,4 +1,4 @@
-package me.potic.rank.coordinator.domain
+package me.potic.models.domain
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString

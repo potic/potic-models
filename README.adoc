@@ -1,19 +1,19 @@
-= potic-rank-coordinator
+= potic-models
 :linkattrs:
 
-Service for coordinating ranker.
+Service for coordinating models.
 
 == Travis job
 
-image:https://travis-ci.org/potic/potic-rank-coordinator.svg?branch=develop["Travis job", link="https://travis-ci.org/potic/potic-rank-coordinator"]
+image:https://travis-ci.org/potic/potic-models.svg?branch=develop["Travis job", link="https://travis-ci.org/potic/potic-models"]
 
 == Code coverage
 
-image:https://codecov.io/gh/potic/potic-rank-coordinator/branch/develop/graph/badge.svg["Code coverage", link="https://codecov.io/gh/potic/potic-rank-coordinator"]
+image:https://codecov.io/gh/potic/potic-models/branch/develop/graph/badge.svg["Code coverage", link="https://codecov.io/gh/potic/potic-models"]
 
 == Docker repository
 
-https://hub.docker.com/r/potic/potic-rank-coordinator/
+https://hub.docker.com/r/potic/potic-models/
 
 == Documentation
 
