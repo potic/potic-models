@@ -1,11 +1,13 @@
-package me.potic.rank.coordinator.domain
+package me.potic.models.domain
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
 @EqualsAndHashCode
 @ToString(includeNames = true)
-class Card {
+class Rank {
 
-    String source
+    String id
+
+    double value
 }

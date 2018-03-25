@@ -1,4 +1,4 @@
-package me.potic.rank.coordinator
+package me.potic.models
 
 import com.codahale.metrics.MetricRegistry
 import com.codahale.metrics.Reporter

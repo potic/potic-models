@@ -1,8 +1,8 @@
-package me.potic.rank.coordinator.service
+package me.potic.models.service
 
 import groovy.util.logging.Slf4j
-import me.potic.rank.coordinator.domain.Article
-import me.potic.rank.coordinator.domain.Rank
+import me.potic.models.domain.Article
+import me.potic.models.domain.Rank
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled

@@ -1,4 +1,4 @@
-package me.potic.rank.coordinator.controller
+package me.potic.models.controller
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
