@@ -36,8 +36,12 @@ class MissingRanksCalculator {
             log.debug("got ${articlesToRank.size()} articles to calculate rank for model ${model}...")
 
             articlesToRank.forEach({ article ->
-                double rankValue = rankerService.rank(article, model)
-                articlesService.addRankToArticle(article.id, new Rank(id: "${model.name}:${model.version}", value: rankValue))
+                try {
+                    double rankValue = rankerService.rank(article, model)
+                    articlesService.addRankToArticle(article.id, new Rank(id: "${model.name}:${model.version}", value: rankValue))
+                } catch (e) {
+                    log.warn "calculating rank rank from ${model} for ${article} failed: $e.message", e
+                }
             })
         })
     }

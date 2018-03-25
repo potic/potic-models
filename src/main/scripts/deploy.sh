@@ -18,7 +18,6 @@ warn "Currently running docker images"
 docker ps -a
 
 warn "Killing currently running docker image..."
-docker kill potic-rank-coordinator; docker rm potic-rank-coordinator
 docker kill potic-models; docker rm potic-models
 
 warn "Starting docker image..."
