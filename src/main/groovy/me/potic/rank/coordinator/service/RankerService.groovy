@@ -21,19 +21,7 @@ class RankerService {
     }
 
     String getActualRankId() {
-        log.debug "requesting actual rank id..."
-
-        try {
-            String response = rankerServiceRest.get(String) {
-                request.uri.path = '/actual'
-                request.contentType = 'application/json'
-            }
-
-            return response
-        } catch (e) {
-            log.error "requesting actual rank id failed: $e.message", e
-            throw new RuntimeException("requesting actual rank id failed", e)
-        }
+        'random:1.0'
     }
 
     double rank(Article article, String rankId) {
