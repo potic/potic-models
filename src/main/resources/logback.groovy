@@ -9,14 +9,14 @@ appender('STDOUT', ConsoleAppender) {
 }
 
 appender('FILE', RollingFileAppender) {
-    file = "${System.getenv('LOG_PATH') ?: 'logs'}/potic-rank-coordinator.log"
+    file = "${System.getenv('LOG_PATH') ?: 'logs'}/potic-models.log"
 
     encoder(PatternLayoutEncoder) {
         pattern = '%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
     }
 
     rollingPolicy(SizeAndTimeBasedRollingPolicy) {
-        FileNamePattern = "${System.getenv('LOG_PATH') ?: 'logs'}/potic-rank-coordinator.%d{yyyy-MM-dd}.%i.log"
+        FileNamePattern = "${System.getenv('LOG_PATH') ?: 'logs'}/potic-models.%d{yyyy-MM-dd}.%i.log"
         MaxHistory = 30
         MaxFileSize = "256MB"
         TotalSizeCap = "4GB"
@@ -27,7 +27,7 @@ appender('LOGZIO', LogzioLogbackAppender) {
     token = System.getenv('LOGZIO_TOKEN') ?: new File('src/main/resources/logzio-dev.properties').text
     logzioUrl = 'https://listener.logz.io:8071'
 
-    additionalFields="service=potic-rank-coordinator;env=${System.getenv('ENVIRONMENT_NAME') ?: 'dev'}"
+    additionalFields="service=potic-models;env=${System.getenv('ENVIRONMENT_NAME') ?: 'dev'}"
 }
 
 def shutdownHook() {
