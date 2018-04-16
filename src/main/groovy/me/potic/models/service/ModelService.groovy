@@ -13,7 +13,7 @@ class ModelService {
     static final Model NB = new Model(name: 'nb', version: '0.1', description: 'naive bayes based on source and words count', timestamp: '2018-04-16T03:12:00.000', isActive: true)
 
     Model getActualModel() {
-        LOGREG
+        NB
     }
 
     List<Model> getActiveModels() {
