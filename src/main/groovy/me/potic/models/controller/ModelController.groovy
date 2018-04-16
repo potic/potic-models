@@ -19,6 +19,19 @@ class ModelController {
     ModelService modelService
 
     @CrossOrigin
+    @GetMapping(path = '/all')
+    @ResponseBody ResponseEntity<Model> getAllModel() {
+        log.debug "receive GET request for /all"
+
+        try {
+            return new ResponseEntity<>(modelService.getModels(), HttpStatus.OK)
+        } catch (e) {
+            log.error "GET request for /all failed: $e.message", e
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    @CrossOrigin
     @GetMapping(path = '/actual')
     @ResponseBody ResponseEntity<Model> getActualModel() {
         log.debug "receive GET request for /actual"
