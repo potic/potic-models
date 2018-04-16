@@ -1,9 +1,7 @@
 package me.potic.models.service
 
 import groovy.util.logging.Slf4j
-import me.potic.models.domain.Article
-import me.potic.models.domain.Model
-import me.potic.models.domain.Rank
+import me.potic.models.domain.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
@@ -37,7 +35,13 @@ class MissingRanksCalculator {
 
             articlesToRank.forEach({ article ->
                 try {
-                    double rankValue = rankerService.rank(article, model)
+                    ArticleDataPoint articleDataPoint = new ArticleDataPoint()
+                    articleDataPoint.source = article.card?.source != null ? article.card?.source : ''
+                    articleDataPoint.word_count = article.fromPocket?.word_count != null ? Integer.parseInt(article.fromPocket?.word_count) : 0
+                    articleDataPoint.showed_count = article.events.count { event -> event.type == ArticleEventType.SHOWED }
+                    articleDataPoint.skipped_count = article.events.count { event -> event.type == ArticleEventType.SKIPPED }
+
+                    double rankValue = rankerService.rank(articleDataPoint, model)
                     articlesService.addRankToArticle(article.id, new Rank(id: "${model.name}:${model.version}", value: rankValue))
                 } catch (e) {
                     log.warn "calculating rank rank from ${model} for ${article} failed: $e.message", e

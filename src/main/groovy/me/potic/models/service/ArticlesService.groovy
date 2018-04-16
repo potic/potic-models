@@ -3,6 +3,8 @@ package me.potic.models.service
 import groovy.util.logging.Slf4j
 import groovyx.net.http.HttpBuilder
 import me.potic.models.domain.Article
+import me.potic.models.domain.ArticleEvent
+import me.potic.models.domain.ArticleEventType
 import me.potic.models.domain.Rank
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -40,6 +42,13 @@ class ArticlesService {
                         card {
                             source
                         }
+                        
+                        events {
+                            userId
+                            articleId
+                            type
+                            timestamp
+                        }
                       }
                     }
                 """ ]
@@ -50,7 +59,11 @@ class ArticlesService {
                 throw new RuntimeException("Request failed: $errors")
             }
 
-            return response.data.withoutRank.collect({ new Article(it) })
+            return response.data.withoutRank.collect({
+                it['events'] = it['events'].collect({ event -> new ArticleEvent(userId: event['userId'], articleId: event['articleId'], type: ArticleEventType.valueOf(event['type']), timestamp: event['timestamp']) })
+
+                new Article(it)
+            })
         } catch (e) {
             log.error "requesting ${count} articles without rank ${rankId} failed: $e.message", e
             throw new RuntimeException("requesting ${count} articles without rank ${rankId} failed", e)
