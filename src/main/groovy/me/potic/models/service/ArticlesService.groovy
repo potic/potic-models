@@ -23,8 +23,8 @@ class ArticlesService {
         }
     }
 
-    Collection<Article> findArticlesWithoutRank(String rankId, int count) {
-        log.debug "requesting ${count} articles without rank ${rankId}..."
+    Collection<Article> findArticlesWithOldestRank(String rankId, int count) {
+        log.debug "requesting ${count} articles with oldest rank ${rankId}..."
 
         try {
             def response = articlesServiceRest.post {
@@ -32,7 +32,7 @@ class ArticlesService {
                 request.contentType = 'application/json'
                 request.body = [ query: """
                     {
-                      withoutRank(rankId: "${rankId}", count: ${count}) {
+                      withOldestRank(rankId: "${rankId}", count: ${count}) {
                         id
                         
                         fromPocket {
@@ -59,14 +59,14 @@ class ArticlesService {
                 throw new RuntimeException("Request failed: $errors")
             }
 
-            return response.data.withoutRank.collect({
+            return response.data.withOldestRank.collect({
                 it['events'] = it['events'].collect({ event -> new ArticleEvent(userId: event['userId'], articleId: event['articleId'], type: ArticleEventType.valueOf(event['type']), timestamp: event['timestamp']) })
 
                 new Article(it)
             })
         } catch (e) {
-            log.error "requesting ${count} articles without rank ${rankId} failed: $e.message", e
-            throw new RuntimeException("requesting ${count} articles without rank ${rankId} failed", e)
+            log.error "requesting ${count} articles with oldest rank ${rankId} failed: $e.message", e
+            throw new RuntimeException("requesting ${count} articles with oldest rank ${rankId} failed", e)
         }
     }
 
