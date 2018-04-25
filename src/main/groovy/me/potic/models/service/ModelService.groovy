@@ -18,7 +18,7 @@ class ModelService {
     static final List<Model> MODELS = [ RANDOM, LOGREG, NB_0_1, NB_0_2, NB_0_3, SVM ]
 
     Model getActualModel() {
-        LOGREG
+        NB_0_3
     }
 
     List<Model> getActiveModels() {
