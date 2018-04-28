@@ -47,7 +47,7 @@ class RankerService {
                 request.body = trainData
             }
 
-            return response.toString()
+            return response.serialized_model
         } catch (e) {
             log.error "request to train model ${model} failed: $e.message", e
             throw new RuntimeException("request to train model ${model} failed", e)
