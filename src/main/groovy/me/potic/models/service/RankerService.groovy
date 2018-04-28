@@ -41,7 +41,7 @@ class RankerService {
         log.debug "request to train model ${model}..."
 
         try {
-            String response = rankerServiceRest.post(String) {
+            def response = rankerServiceRest.post {
                 request.uri.path = "/model/${model.name}:${model.version}"
                 request.contentType = 'application/json'
                 request.body = trainData
