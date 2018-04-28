@@ -37,12 +37,7 @@ class MissingRanksCalculator {
 
             articlesToRank.forEach({ article ->
                 try {
-                    ArticleDataPoint articleDataPoint = new ArticleDataPoint()
-                    articleDataPoint.source = article.card?.source != null ? article.card?.source : ''
-                    articleDataPoint.word_count = article.fromPocket?.word_count != null ? Integer.parseInt(article.fromPocket?.word_count) : 0
-                    articleDataPoint.showed_count = article.events.count { event -> event.type == ArticleEventType.SHOWED }
-                    articleDataPoint.skipped_count = article.events.count { event -> event.type == ArticleEventType.SKIPPED }
-
+                    ArticleDataPoint articleDataPoint = ArticleDataPoint.fromArticle(article)
                     double rankValue = rankerService.rank(articleDataPoint, model)
                     articlesService.addRankToArticle(article.id, new Rank(id: "${model.name}:${model.version}", value: rankValue, timestamp: LocalDateTime.now()))
                 } catch (e) {

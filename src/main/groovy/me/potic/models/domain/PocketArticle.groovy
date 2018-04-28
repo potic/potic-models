@@ -7,5 +7,13 @@ import groovy.transform.ToString
 @ToString(includeNames = true)
 class PocketArticle {
 
+    String status
+
+    Long time_added
+    Long time_read
+
     String word_count
+
+    String has_image
+    String has_video
 }

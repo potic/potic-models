@@ -21,19 +21,36 @@ class RankerService {
         }
     }
 
-    List<Model> ranks() {
-        log.debug "requesting active ranks..."
+    List<Model> models() {
+        log.debug "requesting active models..."
 
         try {
             def response = rankerServiceRest.get {
-                request.uri.path = "/ranks"
+                request.uri.path = "/model"
                 request.contentType = 'application/json'
             }
 
             return response.collect({ new Model(it) })
         } catch (e) {
-            log.error "requesting active ranks failed: $e.message", e
-            throw new RuntimeException("requesting active ranks failed", e)
+            log.error "requesting active models failed: $e.message", e
+            throw new RuntimeException("requesting active models failed", e)
+        }
+    }
+
+    String model(List<ArticleDataPoint> trainData, Model model) {
+        log.debug "request to train model ${model}..."
+
+        try {
+            String response = rankerServiceRest.post(String) {
+                request.uri.path = "/model/${model.name}:${model.version}"
+                request.contentType = 'application/json'
+                request.body = trainData
+            }
+
+            return response.toString()
+        } catch (e) {
+            log.error "request to train model ${model} failed: $e.message", e
+            throw new RuntimeException("request to train model ${model} failed", e)
         }
     }
 

@@ -84,4 +84,69 @@ class ArticlesService {
             throw new RuntimeException("adding rank ${rank} to article #${articleId} failed", e)
         }
     }
+
+    List<Article> getWithEvents(Integer count = null) {
+        log.debug "getting $count articles with events..."
+
+        try {
+            String params = ''
+            if (count != null) {
+                params = "(count: ${count})"
+            }
+
+            def response = articlesServiceRest.post {
+                request.uri.path = '/graphql'
+                request.contentType = 'application/json'
+                request.body = [ query: """
+                    {
+                      withEvents${params} {
+                        id
+                        
+                        userId
+                        
+                        fromPocket {
+                            status
+                            time_added
+                            time_read
+                            word_count
+                            has_image
+                            has_video
+                        }
+                        
+                        card {
+                            source
+                            title
+                        }
+                        
+                        events {
+                            userId
+                            articleId
+                            type
+                            timestamp
+                        }
+                        
+                        ranks {
+                            id
+                            value
+                        }
+                      }
+                    }
+                """ ]
+            }
+
+            List errors = response.errors
+            if (errors != null && !errors.empty) {
+                throw new RuntimeException("Request failed: $errors")
+            }
+
+            return response.data.withEvents.collect({
+                it['events'] = it['events'].collect({ event -> new ArticleEvent(userId: event['userId'], articleId: event['articleId'], type: ArticleEventType.valueOf(event['type']), timestamp: event['timestamp']) })
+                it['ranks'] = it['ranks'].collect({ rank -> new Rank(id: rank['id'], value: Double.parseDouble(rank['value'].toString())) })
+                new Article(it)
+            })
+        } catch (e) {
+            log.error "getting $count articles with events failed: $e.message", e
+            throw new RuntimeException("getting $count articles with events failed: $e.message", e)
+        }
+    }
 }

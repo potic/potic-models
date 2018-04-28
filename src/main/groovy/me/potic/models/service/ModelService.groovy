@@ -24,7 +24,7 @@ class ModelService {
         log.info 'checking active models...'
 
         List<Model> existingModels = getAllModels()
-        List<Model> activeModels = rankerService.ranks()
+        List<Model> activeModels = rankerService.models()
 
         List<Model> allModels = existingModels.collect({ model -> model.isActive = false; model })
 
@@ -36,6 +36,7 @@ class ModelService {
             } else {
                 log.info "new model found ${activeModel}"
                 activeModel.trainTimestamp = LocalDate.now().toString()
+                activeModel.serializedModel = null
                 activeModel.isActive = true
                 allModels.add(activeModel)
             }
