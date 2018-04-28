@@ -50,7 +50,7 @@ class ArticleDataPoint {
         articleDataPoint.has_image = article.fromPocket.has_image
         articleDataPoint.has_video = article.fromPocket.has_video
         articleDataPoint.word_count = word_count
-        articleDataPoint.source = article.card.source
+        articleDataPoint.source = article.card?.source
         articleDataPoint.showed_count = showed_count
         articleDataPoint.skipped_count = skipped_count
         articleDataPoint.liked_count = liked_count
