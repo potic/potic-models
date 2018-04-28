@@ -35,8 +35,15 @@ class ArticlesService {
                       withOldestRank(rankId: "${rankId}", count: ${count}) {
                         id
                         
+                        userId
+                        
                         fromPocket {
+                            status
+                            time_added
+                            time_read
                             word_count
+                            has_image
+                            has_video
                         }
                         
                         card {

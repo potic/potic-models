@@ -34,12 +34,12 @@ class ArticleDataPoint {
     Integer disliked_count
 
     static ArticleDataPoint fromArticle(Article article) {
-        Long read_duration = Math.max(0, article.fromPocket.time_read - article.fromPocket.time_added)
-        Integer word_count = article.fromPocket.word_count != null ? Long.parseLong(article.fromPocket.word_count) : null
-        Integer showed_count = article.events.count { event -> event.type == ArticleEventType.SHOWED }
-        Integer skipped_count = article.events.count { event -> event.type == ArticleEventType.SKIPPED }
-        Integer liked_count = article.events.count { event -> event.type == ArticleEventType.LIKED }
-        Integer disliked_count = article.events.count { event -> event.type == ArticleEventType.DISLIKED }
+        Long read_duration = article.fromPocket != null && article.fromPocket.time_read != null && article.fromPocket.time_added != null ? Math.max(0, article.fromPocket.time_read - article.fromPocket.time_added) : null
+        Integer word_count = article.fromPocket != null && article.fromPocket.word_count != null ? Long.parseLong(article.fromPocket.word_count) : null
+        Integer showed_count = article.events != null ? article.events.count { event -> event.type == ArticleEventType.SHOWED } : null
+        Integer skipped_count = article.events != null ? article.events.count { event -> event.type == ArticleEventType.SKIPPED } : null
+        Integer liked_count = article.events != null ? article.events.count { event -> event.type == ArticleEventType.LIKED } : null
+        Integer disliked_count = article.events != null ? article.events.count { event -> event.type == ArticleEventType.DISLIKED } : null
 
         ArticleDataPoint articleDataPoint = new ArticleDataPoint()
         articleDataPoint.id = article.id
