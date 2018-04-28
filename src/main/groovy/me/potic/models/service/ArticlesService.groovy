@@ -115,7 +115,6 @@ class ArticlesService {
                         
                         card {
                             source
-                            title
                         }
                         
                         events {
