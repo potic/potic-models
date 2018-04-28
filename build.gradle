@@ -1,5 +1,5 @@
 plugins {
-    id 'com.gradle.build-scan' version '1.12.1'
+    id 'com.gradle.build-scan' version '1.13.1'
 
     id 'groovy'
 
@@ -13,7 +13,7 @@ plugins {
 version = "${new File('VERSION').text}${project.hasProperty('patchVersion') ? '.' + patchVersion : '-SNAPSHOT'}"
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
+    gradleVersion = '4.7'
 }
 
 sourceSets {
@@ -42,6 +42,8 @@ dependencies {
 
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+    compile 'org.springframework.data:spring-data-mongodb'
 
     compile 'io.github.http-builder-ng:http-builder-ng-core:1.0.3'
 

@@ -21,6 +21,22 @@ class RankerService {
         }
     }
 
+    List<Model> ranks() {
+        log.debug "requesting active ranks..."
+
+        try {
+            def response = rankerServiceRest.get {
+                request.uri.path = "/ranks"
+                request.contentType = 'application/json'
+            }
+
+            return response.collect({ new Model(it) })
+        } catch (e) {
+            log.error "requesting active ranks failed: $e.message", e
+            throw new RuntimeException("requesting active ranks failed", e)
+        }
+    }
+
     double rank(ArticleDataPoint articleDataPoint, Model model) {
         log.debug "requesting rank from ${model} for ${articleDataPoint}..."
 
