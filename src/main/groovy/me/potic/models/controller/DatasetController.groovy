@@ -30,7 +30,7 @@ class DatasetController {
             List<ArticleDataPoint> eventsTrainDataset = trainService.getEventsTrainDataset(count)
 
             response.outputStream.withPrintWriter { writer ->
-                writer.write('id,user_id,read,read_time,read_duration,has_image,has_video,word_count,source,showed_count,skipped_count,liked_count,disliked_count')
+                writer.write('id,user_id,read,read_time,read_duration,has_image,has_video,word_count,source,showed_count,skipped_count,liked_count,disliked_count\n')
                 eventsTrainDataset.forEach { ArticleDataPoint articleDataPoint ->
                     writer.write(
                             "${articleDataPoint.id}," +
