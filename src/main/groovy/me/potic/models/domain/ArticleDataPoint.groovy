@@ -44,11 +44,11 @@ class ArticleDataPoint {
         ArticleDataPoint articleDataPoint = new ArticleDataPoint()
         articleDataPoint.id = article.id
         articleDataPoint.user_id = article.userId
-        articleDataPoint.status = article.fromPocket.status
-        articleDataPoint.time_read = article.fromPocket.time_read
+        articleDataPoint.status = article.fromPocket?.status
+        articleDataPoint.time_read = article.fromPocket?.time_read
         articleDataPoint.read_duration = read_duration
-        articleDataPoint.has_image = article.fromPocket.has_image
-        articleDataPoint.has_video = article.fromPocket.has_video
+        articleDataPoint.has_image = article.fromPocket?.has_image
+        articleDataPoint.has_video = article.fromPocket?.has_video
         articleDataPoint.word_count = word_count
         articleDataPoint.source = article.card?.source
         articleDataPoint.showed_count = showed_count
