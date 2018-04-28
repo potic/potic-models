@@ -21,7 +21,7 @@ warn "Killing currently running docker image..."
 docker kill potic-models; docker rm potic-models
 
 warn "Starting docker image..."
-docker run -dit --name potic-models --restart on-failure --link potic-articles --link potic-ranker --link potic-mongodb -e LOG_PATH=/mnt/logs -v /mnt/logs:/mnt/logs -e MONGO_PASSWORD=$MONGO_PASSWORD -e LOGZIO_TOKEN=$LOGZIO_TOKEN potic/potic-models:$TAG_TO_DEPLOY
+docker run -dit --name potic-models --restart on-failure --link potic-articles --link potic-ranker --link potic-mongodb -e LOG_PATH=/mnt/logs -v /mnt/logs:/mnt/logs -e MONGO_PASSWORD=$MONGO_PASSWORD -e LOGZIO_TOKEN=$LOGZIO_TOKEN -p 40408:8080 potic/potic-models:$TAG_TO_DEPLOY
 
 warn "Wait 30sec to check status"
 sleep 30
