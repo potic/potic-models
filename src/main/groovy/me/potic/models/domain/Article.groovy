@@ -11,6 +11,8 @@ class Article {
 
     String id
 
+    String userId
+
     PocketArticle fromPocket
 
     Card card
