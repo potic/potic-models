@@ -33,7 +33,7 @@ class TrainService {
         log.info 'training outdated models...'
 
         List<Model> activeModels = modelService.getActiveModels()
-        List<Model> outdatedModels = activeModels.findAll({ model -> model.serializedModel == null || Duration.between(LocalDate.now(), LocalDate.parse(model.trainTimestamp)).toDays() >= modelsOutdatedPeriod })
+        List<Model> outdatedModels = activeModels.findAll({ model -> model.serializedModel == null || Duration.between(LocalDate.now().atStartOfDay(), LocalDate.parse(model.trainTimestamp).atStartOfDay()).toDays() >= modelsOutdatedPeriod })
 
         List<ArticleDataPoint> trainData = outdatedModels.empty ? [] : getEventsTrainDataset()
 
