@@ -42,6 +42,7 @@ class TrainService {
                 log.info("model ${model} is outdated")
                 String serializedModel = rankerService.model(trainData, model)
                 model.serializedModel = serializedModel
+                model.trainTimestamp = LocalDate.now().toString()
                 modelService.upsertModel(model)
             } catch (e) {
                 log.warn "training outdated model ${model} failed: $e.message", e
