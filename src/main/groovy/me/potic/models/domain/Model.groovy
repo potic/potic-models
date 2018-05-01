@@ -5,7 +5,7 @@ import groovy.transform.ToString
 import org.springframework.data.annotation.Id
 
 @EqualsAndHashCode
-@ToString(includeNames = true)
+@ToString(includeNames = true, excludes = [ 'serializedModel' ])
 class Model {
 
     @Id
