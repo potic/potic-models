@@ -25,9 +25,9 @@ class MissingRanksCalculator {
     @Autowired
     ArticlesService articlesService
 
-    @Scheduled(fixedDelay = 30_000L)
+    @Scheduled(fixedDelay = 10_000L) // every 10 sec
     void calculateMissingRanks() {
-        log.info 'calculating missing ranks...'
+        log.debug 'calculating missing ranks...'
 
         List<Model> activeModels = modelService.getActiveModels()
 

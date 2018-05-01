@@ -28,12 +28,12 @@ class TrainService {
     @Autowired
     ArticlesService articlesService
 
-    @Scheduled(fixedDelay = 30_000L)
+    @Scheduled(fixedDelay = 3600_000L) // every 1 hour
     void trainOutdatedModels() {
-        log.info 'training outdated models...'
+        log.debug 'training outdated models...'
 
         List<Model> activeModels = modelService.getActiveModels()
-        List<Model> outdatedModels = activeModels.findAll({ model -> model.serializedModel == null || Duration.between(LocalDate.now().atStartOfDay(), LocalDate.parse(model.trainTimestamp).atStartOfDay()).toDays() >= modelsOutdatedPeriod })
+        List<Model> outdatedModels = activeModels.findAll({ model -> model.serializedModel == null || Duration.between(LocalDate.parse(model.trainTimestamp).atStartOfDay(), LocalDate.now().atStartOfDay()).toDays() >= modelsOutdatedPeriod })
 
         List<ArticleDataPoint> trainData = outdatedModels.empty ? [] : getEventsTrainDataset()
 

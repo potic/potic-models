@@ -15,3 +15,4 @@ build/
 # Runtime #
 logs/
 logzio-dev.properties
+mongodb-dev.properties

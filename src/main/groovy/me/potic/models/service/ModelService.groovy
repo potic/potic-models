@@ -19,9 +19,9 @@ class ModelService {
     @Autowired
     MongoTemplate mongoTemplate
 
-    @Scheduled(fixedDelay = 30_000L)
+    @Scheduled(fixedDelay = 3600_000L) // every 1 hour
     void checkActiveModels() {
-        log.info 'checking active models...'
+        log.debug 'checking active models...'
 
         List<Model> existingModels = getAllModels()
         List<Model> activeModels = rankerService.models()
