@@ -18,8 +18,7 @@ appender('FILE', RollingFileAppender) {
     rollingPolicy(SizeAndTimeBasedRollingPolicy) {
         FileNamePattern = "${System.getenv('LOG_PATH') ?: 'logs'}/potic-models.%d{yyyy-MM-dd}.%i.log"
         MaxHistory = 3
-        MaxFileSize = "64MB"
-        TotalSizeCap = "256MB"
+        MaxFileSize = "256MB"
     }
 }
 
