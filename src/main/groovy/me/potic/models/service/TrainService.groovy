@@ -44,7 +44,6 @@ class TrainService {
 
                 model.trainTimestamp = LocalDate.now().toString()
 
-                model.serializedModel = null
                 String outdatedModelId = model.serializedModelId
                 String newModelId = modelService.storeSerializedModel(model, serializedModel)
                 model.serializedModelId = newModelId

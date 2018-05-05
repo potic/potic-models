@@ -5,7 +5,7 @@ import groovy.transform.ToString
 import org.springframework.data.annotation.Id
 
 @EqualsAndHashCode
-@ToString(includeNames = true, excludes = [ 'serializedModel' ])
+@ToString(includeNames = true)
 class Model {
 
     @Id
@@ -18,8 +18,6 @@ class Model {
     String description
 
     String trainTimestamp
-
-    String serializedModel
 
     String serializedModelId
 

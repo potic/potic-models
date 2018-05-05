@@ -48,7 +48,6 @@ class ModelService {
             } else {
                 log.info "new model found ${activeModel}"
                 activeModel.trainTimestamp = LocalDate.now().toString()
-                activeModel.serializedModel = null
                 activeModel.isActive = true
                 allModels.add(activeModel)
             }
