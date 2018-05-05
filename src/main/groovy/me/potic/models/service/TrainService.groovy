@@ -33,7 +33,7 @@ class TrainService {
         log.debug 'training outdated models...'
 
         List<Model> activeModels = modelService.getActiveModels()
-        List<Model> outdatedModels = activeModels.findAll({ model -> model.serializedModel == null || Duration.between(LocalDate.parse(model.trainTimestamp).atStartOfDay(), LocalDate.now().atStartOfDay()).toDays() >= modelsOutdatedPeriod })
+        List<Model> outdatedModels = activeModels.findAll({ model -> model.serializedModelId == null || Duration.between(LocalDate.parse(model.trainTimestamp).atStartOfDay(), LocalDate.now().atStartOfDay()).toDays() >= modelsOutdatedPeriod })
 
         List<ArticleDataPoint> trainData = outdatedModels.empty ? [] : getEventsTrainDataset()
 
@@ -41,9 +41,19 @@ class TrainService {
             try {
                 log.info("model ${model} is outdated")
                 String serializedModel = rankerService.model(trainData, model)
-                model.serializedModel = serializedModel
+
                 model.trainTimestamp = LocalDate.now().toString()
+
+                model.serializedModel = null
+                String outdatedModelId = model.serializedModelId
+                String newModelId = modelService.storeSerializedModel(model, serializedModel)
+                model.serializedModelId = newModelId
+
                 modelService.upsertModel(model)
+
+                if (outdatedModelId != null) {
+                    modelService.deleteSerializedModel(outdatedModelId)
+                }
             } catch (e) {
                 log.warn "training outdated model ${model} failed: $e.message", e
             }

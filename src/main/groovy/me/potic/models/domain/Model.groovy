@@ -21,5 +21,7 @@ class Model {
 
     String serializedModel
 
+    String serializedModelId
+
     boolean isActive
 }
