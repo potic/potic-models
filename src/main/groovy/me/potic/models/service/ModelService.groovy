@@ -57,7 +57,7 @@ class ModelService {
     }
 
     Model getActualModel() {
-        getAllModels().find { model -> model.name == 'nbayes' && model.version == '1.0' }
+        getAllModels().find { model -> model.name == 'svm' && model.version == '1.0' }
     }
 
     List<Model> getActiveModels() {
